@@ -21,64 +21,76 @@ class TicTacToe {
      */
     fun checkWinner(board: Board): Board.WinState {
         // Check four corners
-        val fourCorners = setOf(
+        val fourCorners = listOf(
             board.getCellState(0, 0),
             board.getCellState(0, 3),
             board.getCellState(3, 0),
             board.getCellState(3, 3),
         )
 
-        if (fourCorners.size == 1 && fourCorners.first() != Board.CellState.EMPTY) {
-            return fourCorners.first().toWinState()
+        var result = checkCellsForWinner(fourCorners)
+
+        if (result != null) {
+            return result
         }
 
         // Check diagonals
 
         // Top left to bottom right
-        val topLeftDiagonal = (0 until 4).map { board.getCellState(it, it) }.toSet()
+        val topLeftDiagonal = (0 until 4).map { board.getCellState(it, it) }
 
-        if (topLeftDiagonal.size == 1 && topLeftDiagonal.first() != Board.CellState.EMPTY) {
-            return topLeftDiagonal.first().toWinState()
+        result = checkCellsForWinner(topLeftDiagonal)
+
+        if (result != null) {
+            return result
         }
 
         // Top right to bottom left
-        val topRightDiagonal = (0 until board.getSize()).map { board.getCellState(it, 3 - it) }.toSet()
+        val topRightDiagonal = (0 until board.getSize()).map { board.getCellState(it, 3 - it) }
 
-        if (topRightDiagonal.size == 1 && topRightDiagonal.first() != Board.CellState.EMPTY) {
-            return topRightDiagonal.first().toWinState()
+        result = checkCellsForWinner(topRightDiagonal)
+
+        if (result != null) {
+            return result
         }
 
         // 2x2 square
         for (row in 0 until board.getSize() - 1) {
             for (col in 0 until board.getSize() - 1) {
-                val squareState = setOf(
+                val squareState = listOf(
                     board.getCellState(row, col),
                     board.getCellState(row + 1, col),
                     board.getCellState(row, col + 1),
                     board.getCellState(row + 1, col + 1),
                 )
 
-                if (squareState.size == 1 && squareState.first() != Board.CellState.EMPTY) {
-                    return squareState.first().toWinState()
+                result = checkCellsForWinner(squareState)
+
+                if (result != null) {
+                    return result
                 }
             }
         }
 
         // Horizontal
         for (row in 0 until board.getSize()) {
-            val horizontalState = (0 until board.getSize()).map { board.getCellState(row, it) }.toSet()
+            val horizontalState = (0 until board.getSize()).map { board.getCellState(row, it) }
 
-            if (horizontalState.size == 1 && horizontalState.first() != Board.CellState.EMPTY) {
-                return horizontalState.first().toWinState()
+            result = checkCellsForWinner(horizontalState)
+
+            if (result != null) {
+                return result
             }
         }
 
         // Vertical
         for (col in 0 until board.getSize()) {
-            val verticalState = (0 until board.getSize()).map { board.getCellState(it, col) }.toSet()
+            val verticalState = (0 until board.getSize()).map { board.getCellState(it, col) }
 
-            if (verticalState.size == 1 && verticalState.first() != Board.CellState.EMPTY) {
-                return verticalState.first().toWinState()
+            result = checkCellsForWinner(verticalState)
+
+            if (result != null) {
+                return result
             }
         }
 
@@ -115,5 +127,12 @@ class TicTacToe {
         val noMovesLeft = !anyMovesLeft(board)
 
         return winnerFound || noMovesLeft
+    }
+
+    private fun checkCellsForWinner(cells: List<Board.CellState>): Board.WinState? {
+        val first = cells.first()
+        return if (first != Board.CellState.EMPTY && cells.all { it == first }) {
+            first.toWinState()
+        } else null
     }
 }
