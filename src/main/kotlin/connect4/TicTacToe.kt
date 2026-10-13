@@ -42,15 +42,15 @@ class TicTacToe {
         }
 
         // Top right to bottom left
-        val topRightDiagonal = (0 until 4).map { board.getCellState(it, 3 - it) }.toSet()
+        val topRightDiagonal = (0 until board.getSize()).map { board.getCellState(it, 3 - it) }.toSet()
 
         if (topRightDiagonal.size == 1 && topRightDiagonal.first() != Board.CellState.EMPTY) {
             return topRightDiagonal.first().toWinState()
         }
 
         // 2x2 square
-        for (row in 0 until 3) {
-            for (col in 0 until 3) {
+        for (row in 0 until board.getSize() - 1) {
+            for (col in 0 until board.getSize() - 1) {
                 val squareState = setOf(
                     board.getCellState(row, col),
                     board.getCellState(row + 1, col),
@@ -65,8 +65,8 @@ class TicTacToe {
         }
 
         // Horizontal
-        for (row in 0 until 4) {
-            val horizontalState = (0 until 4).map { board.getCellState(row, it) }.toSet()
+        for (row in 0 until board.getSize()) {
+            val horizontalState = (0 until board.getSize()).map { board.getCellState(row, it) }.toSet()
 
             if (horizontalState.size == 1 && horizontalState.first() != Board.CellState.EMPTY) {
                 return horizontalState.first().toWinState()
@@ -74,8 +74,8 @@ class TicTacToe {
         }
 
         // Vertical
-        for (col in 0 until 4) {
-            val verticalState = (0 until 4).map { board.getCellState(it, col) }.toSet()
+        for (col in 0 until board.getSize()) {
+            val verticalState = (0 until board.getSize()).map { board.getCellState(it, col) }.toSet()
 
             if (verticalState.size == 1 && verticalState.first() != Board.CellState.EMPTY) {
                 return verticalState.first().toWinState()

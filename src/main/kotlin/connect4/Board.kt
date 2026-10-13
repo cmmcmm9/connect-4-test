@@ -31,6 +31,13 @@ class Board(
     }
 
     /**
+     * Return the current board size
+     */
+    fun getSize(): Int {
+        return cells.size
+    }
+
+    /**
      * Enum representing the states of the cell in the board
      */
     enum class CellState {
