@@ -14,12 +14,13 @@ class TicTacToe {
      * A win is defined by:
      * * 2x2 box
      * * All four corners
-     * * Diagonal, horizontal, or vertical
+     * * Diagonal, horizontal, or vertical 4 in a row
      * @param board The [Board] to check for a [Board.WinState]
-     * @return The [Board.WinState] of the given [board]
+     * @return The [Board.WinState] of the given [board]. Either [Board.WinState.X], [Board.WinState.O] or no win state
+     * represented by [Board.WinState.NONE]. Note that for a draw or in progres board, [Board.WinState.NONE] will be returned.
      */
     fun checkWinner(board: Board): Board.WinState {
-        // Check four corners, smallest solution set
+        // Check four corners
         val fourCorners = setOf(
             board.getCellState(0, 0),
             board.getCellState(0, 3),
@@ -31,7 +32,7 @@ class TicTacToe {
             return fourCorners.first().toWinState()
         }
 
-        // Check diagonals, 2nd smallest solution set
+        // Check diagonals
 
         // Top left to bottom right
         val topLeftDiagonal = (0 until 4).map { board.getCellState(it, it) }.toSet()
@@ -86,7 +87,7 @@ class TicTacToe {
 
     /**
      * Check if the given [board] has any moves left.
-     * If there are any moves left, it is determined if a cell has an [Board.CellState.EMPTY] value.
+     * A move is available if any cell is EMPTY [Board.CellState.EMPTY] value.
      * @param board the [Board] to check if there are any moves left
      * @return true if there are moves left, otherwise false
      */

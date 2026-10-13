@@ -40,5 +40,8 @@ If time permitted, I would include more tests for edge cases such as:
 * 3 in a row does not pass for vertical or horizontal
 * 3 in a row does not pass for diagonal
 * A 2x1 or 1x2 box does not pass
-* Add a simple test case for the Board class
+
+Other considerations:
+* Could add a simple test case for the Board class
+* Current solution does not handle multiple winners could be present on the board
 
