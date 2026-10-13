@@ -35,6 +35,11 @@ JUnit 5 is used to validate:
 * Detection of remaining moves 
 * No winner board states
 
+To run the tests:
+* enter the project directory in your terminal
+* For windows run `./gradlew.bat test`
+* For linux run `./gradlew test`
+
 ## Notes
 If time permitted, I would include more tests for edge cases such as:
 * 3 in a row does not pass for vertical or horizontal
